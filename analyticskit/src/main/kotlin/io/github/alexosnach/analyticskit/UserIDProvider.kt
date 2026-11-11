@@ -32,7 +32,8 @@ class AnonymousUserIDProvider(
      */
     private fun rawID(): String {
         store.load()?.let { return it }
-        val new = UUID.randomUUID().toString()
+        // Uppercase, the same form as `UUID().uuidString` in the Swift library.
+        val new = UUID.randomUUID().toString().uppercase()
         store.save(new)
         return new
     }

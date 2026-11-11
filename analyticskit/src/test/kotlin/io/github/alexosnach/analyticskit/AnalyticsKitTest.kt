@@ -167,6 +167,16 @@ class AnonymousUserIDProviderTest {
         assertEquals(hasher.hash(saved!!), id)
     }
 
+    /** The same form as `UUID().uuidString` on iOS: `8FC10609-B5A6-4C45-A2A0-8B340468E611`. */
+    @Test
+    fun savesTheIDAsAnUppercaseUUID() {
+        val store = InMemoryUserIDStore()
+
+        AnonymousUserIDProvider(store, hasher).currentUserID()
+
+        assertTrue(Regex("[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}").matches(store.saved!!))
+    }
+
     @Test
     fun reusesTheSavedID() {
         val store = InMemoryUserIDStore(saved = "existing-id")
@@ -205,6 +215,26 @@ class AnonymousUserIDProviderTest {
         val provider = AnonymousUserIDProvider(store, hasher)
 
         assertNotEquals("raw-id", provider.currentUserID().value)
+    }
+}
+
+class SharedPreferencesFailureTest {
+    @Test
+    fun keepsTheCause() {
+        val cause = ClassCastException("java.lang.Integer cannot be cast to java.lang.String")
+
+        assertEquals(cause, SharedPreferencesUserIDStore.Failure.Read(cause).cause)
+    }
+
+    @Test
+    fun describesTheOperationAndTheCause() {
+        val cause = ClassCastException("java.lang.Integer cannot be cast to java.lang.String")
+
+        assertEquals(
+            "SharedPreferences read failed: java.lang.Integer cannot be cast to java.lang.String",
+            SharedPreferencesUserIDStore.Failure.Read(cause).toString(),
+        )
+        assertEquals("SharedPreferences write failed", SharedPreferencesUserIDStore.Failure.Write.toString())
     }
 }
 

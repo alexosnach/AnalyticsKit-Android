@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.alexosnach:AnalyticsKit-Android:1.0.0")
+    implementation("com.github.alexosnach:AnalyticsKit-Android:1.0.1")
 }
 ```
 
