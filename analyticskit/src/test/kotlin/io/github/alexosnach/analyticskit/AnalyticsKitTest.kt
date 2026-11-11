@@ -167,14 +167,14 @@ class AnonymousUserIDProviderTest {
         assertEquals(hasher.hash(saved!!), id)
     }
 
-    /** The same form as `UUID().uuidString` on iOS: `8FC10609-B5A6-4C45-A2A0-8B340468E611`. */
+    /** The same form on every platform: `8fc10609-b5a6-4c45-a2a0-8b340468e611`. */
     @Test
-    fun savesTheIDAsAnUppercaseUUID() {
+    fun savesTheIDAsALowercaseUUID() {
         val store = InMemoryUserIDStore()
 
         AnonymousUserIDProvider(store, hasher).currentUserID()
 
-        assertTrue(Regex("[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}").matches(store.saved!!))
+        assertTrue(Regex("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}").matches(store.saved!!))
     }
 
     @Test

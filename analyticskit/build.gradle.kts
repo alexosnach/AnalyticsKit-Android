@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.alexosnach"
-version = "1.0.1"
+version = "1.0.2"
 
 android {
     namespace = "io.github.alexosnach.analyticskit"

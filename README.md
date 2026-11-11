@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.alexosnach:AnalyticsKit-Android:1.0.1")
+    implementation("com.github.alexosnach:AnalyticsKit-Android:1.0.2")
 }
 ```
 
@@ -127,7 +127,7 @@ The [`sample`](sample) app has two small providers (`LogcatAnalyticsProvider`, `
 
 - `HashedUserID` can only be created by an `IdentifierHasher` of this library (its constructor is `internal`), so a raw ID can never reach analytics by mistake.
 - `SHA256IdentifierHasher` hashes the UTF-8 bytes to lowercase hex — the same input gives the same ID as the Swift library.
-- `AnonymousUserIDProvider` generates a random ID on first launch and keeps it in a `UserIDStore`.
+- `AnonymousUserIDProvider` generates a random ID on first launch (a lowercase UUID, the same form as in the Swift library) and keeps it in a `UserIDStore`.
 - `SharedPreferencesUserIDStore` keeps the raw ID in a private preferences file. Storage failures are reported to `onError` and never crash the app.
 - When your app gets accounts, replace the provider with one that hashes the backend ID — calling code stays the same.
 
